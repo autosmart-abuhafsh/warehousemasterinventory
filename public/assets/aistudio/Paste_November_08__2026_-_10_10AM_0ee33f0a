@@ -1,0 +1,986 @@
+# PRODUCT REQUIREMENTS DOCUMENT (PRD)
+# WAREHOUSE MASTER INVENTORY MANAGEMENT SYSTEM
+## PT. GLOBAL ENERGI LESTARI – WAREHOUSE JATIREJO
+
+**Jenis Sistem:** Warehouse Management System (WMS) / Master Inventory Management System  
+**Nama Proyek:** Warehouse Master Inventory – Global Energi Lestari  
+**Lokasi Implementasi:** Warehouse Jatirejo  
+**Versi Dokumen:** 1.0  
+**Status:** Product Requirements & Development Specification
+
+---
+
+# 1. LATAR BELAKANG PROYEK
+
+PT. GLOBAL ENERGI LESTARI membutuhkan sebuah sistem digital untuk mengelola, memantau, dan menganalisis persediaan barang di gudang secara terstruktur, akurat, dan mudah dipahami.
+
+Sistem ini difokuskan pada pengelolaan persediaan sparepart alat berat dan kebutuhan armada logistik.
+
+Kondisi persediaan gudang harus dapat diketahui melalui satu dashboard terintegrasi yang menyajikan informasi dalam bentuk angka, persentase, grafik, tabel, dan indikator status.
+
+Sistem tidak hanya berfungsi sebagai tempat pencatatan barang masuk dan keluar, tetapi juga sebagai alat bantu pengambilan keputusan bagi pengelola gudang dan manajemen.
+
+Pengguna harus dapat mengetahui dengan cepat:
+
+- Apakah ketersediaan stok gudang saat ini mencukupi kebutuhan operasional?
+- Berapa persentase kesiapan atau readiness persediaan barang?
+- Berapa total nilai rupiah seluruh persediaan gudang?
+- Barang apa saja yang mengalami pergerakan cepat, sedang, lambat, atau tidak bergerak?
+- Berapa jumlah barang yang diterima dan dikeluarkan?
+- Berapa jumlah barang yang stoknya rendah, aman, atau berlebih?
+- Berapa jumlah barang yang harus segera dilakukan pengisian kembali?
+- Apakah barang kritikal yang tidak boleh kosong masih tersedia?
+
+Seluruh informasi tersebut harus divisualisasikan melalui dashboard yang informatif, interaktif, modern, dan mudah dipahami bahkan oleh pengguna yang tidak memiliki latar belakang teknis.
+
+# 2. TUJUAN UTAMA SISTEM
+
+Sistem dikembangkan dengan tujuan:
+
+1. Mendigitalisasi seluruh proses pencatatan persediaan barang gudang.
+2. Memudahkan pemantauan stok barang secara terpusat.
+3. Menampilkan tingkat kesiapan persediaan gudang dalam bentuk persentase.
+4. Menghitung total nilai inventaris berdasarkan harga satuan dan jumlah stok.
+5. Menganalisis pergerakan barang berdasarkan transaksi Stock In dan Stock Out.
+6. Mengidentifikasi barang dengan stok rendah, aman, berlebih, dan kritikal.
+7. Menyediakan laporan kebutuhan pengisian kembali stok gudang (Stock Replenishment / Refill Request).
+8. Mempermudah pengambilan keputusan pengadaan barang.
+9. Meminimalkan kesalahan pencatatan dan risiko kekosongan barang.
+10. Menyediakan riwayat transaksi dan audit aktivitas pengguna.
+
+# 3. TARGET PENGGUNA DAN HAK AKSES
+
+Sistem memiliki beberapa tingkatan pengguna.
+
+### 3.1 Super Admin
+Memiliki akses penuh terhadap seluruh sistem.
+
+Hak akses:
+- Mengelola seluruh data master.
+- Menambah, mengubah, dan menonaktifkan akun.
+- Mengatur hak akses pengguna.
+- Melihat dan mengelola seluruh transaksi.
+- Mengakses seluruh laporan.
+- Mengakses audit log.
+- Mengatur konfigurasi sistem.
+
+### 3.2 Admin Gudang
+Bertanggung jawab terhadap pengelolaan data dan aktivitas gudang.
+
+Hak akses:
+- Mengelola Master Item.
+- Mencatat Stock In.
+- Mencatat Stock Out.
+- Mengelola kategori barang.
+- Melihat kondisi persediaan.
+- Membuat laporan stok.
+- Membuat permintaan pengisian ulang stok.
+- Melakukan Stock Opname sesuai kewenangan.
+
+### 3.3 Storekeeper / Petugas Gudang
+Bertugas melakukan pencatatan aktivitas operasional gudang.
+
+Hak akses:
+- Melihat daftar barang.
+- Mencatat barang masuk.
+- Mencatat barang keluar.
+- Melihat stok tersedia.
+- Melihat riwayat transaksi sesuai kewenangan.
+
+### 3.4 Management / Pimpinan
+Memiliki akses untuk memantau dan mengevaluasi kondisi persediaan.
+
+Hak akses:
+- Melihat dashboard utama.
+- Melihat KPI dan grafik analisis.
+- Memantau nilai inventaris.
+- Melihat laporan pergerakan stok.
+- Melihat daftar barang kritikal.
+- Mengunduh laporan.
+- Memantau laporan permintaan pengisian stok.
+
+Pengaturan hak akses harus dapat disesuaikan oleh Super Admin.
+
+# 4. KONSEP DAN STRUKTUR DASHBOARD UTAMA
+
+Dashboard merupakan halaman utama setelah pengguna berhasil login.
+
+Dashboard harus menyajikan kondisi persediaan gudang secara menyeluruh dan mudah dipahami.
+
+## 4.1 Ringkasan KPI Utama
+
+Tampilkan lima kartu KPI utama pada bagian atas dashboard.
+
+### KPI 1 – Stock Readiness / Inventory Availability
+
+Menampilkan persentase tingkat kesiapan persediaan gudang.
+
+Contoh tampilan:
+- Stock Readiness: 85%
+- Item Cukup: 110
+- Item Tidak Cukup: 15
+- Total Master Item Aktif: 125
+
+Rumus:
+
+Stock Readiness (%) = (Jumlah Item dengan stok di atas minimum / Total Master Item Aktif) × 100%.
+
+Fungsi:
+- Mengetahui tingkat kesiapan stok gudang.
+- Menampilkan indikator persentase.
+- Menampilkan jumlah barang cukup dan tidak cukup.
+- Dapat diklik untuk membuka rincian barang.
+- Menyediakan tombol Download Excel.
+
+File Excel dapat digunakan sebagai laporan permintaan pengisian kembali stok gudang (Stock Replenishment Request).
+
+### KPI 2 – Total Value Stock
+
+Menampilkan total estimasi nilai rupiah seluruh persediaan gudang.
+
+Rumus:
+
+Total Value Stock = Σ (Stok Tersedia × Harga Satuan).
+
+Contoh:
+Rp63.975.000.
+
+Fungsi:
+- Memantau nilai inventaris gudang.
+- Mengetahui estimasi nilai persediaan yang masih tersedia.
+- Melihat nilai stok berdasarkan kategori.
+- Melihat detail nilai inventaris setiap barang.
+
+### KPI 3 – Stock Movement Ranking
+
+Menampilkan klasifikasi pergerakan persediaan berdasarkan aktivitas barang keluar.
+
+Kategori:
+- Fast Moving.
+- Medium Moving.
+- Slow Moving.
+- Non Moving.
+
+Visualisasi:
+- Persentase masing-masing kategori.
+- Jumlah item pada setiap kategori.
+- Grafik Donut / Pie Chart.
+- Tabel rincian barang berdasarkan kategori.
+
+Ketentuan klasifikasi awal dapat menggunakan tanggal transaksi Stock Out terakhir:
+
+- Fast Moving: terdapat pergerakan keluar dalam 1–30 hari terakhir.
+- Medium Moving: pergerakan terakhir 31–60 hari.
+- Slow Moving: pergerakan terakhir 61–90 hari.
+- Non Moving: tidak ada pergerakan keluar selama lebih dari 90 hari atau belum pernah mengalami Stock Out.
+
+Batas periode tersebut harus dapat diubah melalui pengaturan sistem.
+
+### KPI 4 – Total Stock In & Stock Out
+
+Menampilkan total kuantitas barang yang diterima dan dikeluarkan dari gudang.
+
+Stock In:
+- Total barang masuk.
+- Jumlah transaksi penerimaan.
+- Jumlah jenis barang yang diterima.
+
+Stock Out:
+- Total barang keluar.
+- Jumlah transaksi pengeluaran.
+- Jumlah jenis barang yang dikeluarkan.
+
+Visualisasi:
+- Grafik perbandingan Stock In dan Stock Out.
+- Grafik berdasarkan hari, minggu, bulan, atau tahun.
+- Informasi total kuantitas dan jumlah transaksi.
+
+### KPI 5 – Stock Status Distribution
+
+Menampilkan kondisi persediaan berdasarkan status ketersediaan.
+
+Terdiri dari:
+
+1. Low Stock / Tidak Cukup: stok berada pada atau di bawah batas minimum.
+2. Safe Stock / Cukup: stok berada di atas batas minimum dan tidak melebihi batas maksimum apabila batas maksimum telah ditentukan.
+3. Over Stock / Berlebih: stok melebihi batas maksimum.
+
+Visualisasi:
+- Jumlah item masing-masing status.
+- Persentase masing-masing status.
+- Grafik komposisi persediaan.
+- Tabel rincian barang.
+
+## 4.2 Analisis Dashboard Lanjutan
+
+Selain lima KPI utama, dashboard harus menyediakan indikator analisis berikut.
+
+### A. Total Master Item
+Menampilkan jumlah seluruh jenis barang yang terdaftar dalam sistem.
+
+### B. Total Stok Fisik
+Menampilkan akumulasi kuantitas barang yang tersedia di gudang.
+
+### C. Low Stock Alert
+Menampilkan jumlah barang yang mengalami stok rendah.
+
+### D. Inventory Movement Ratio
+Menghitung rasio pergerakan barang keluar terhadap barang masuk.
+
+Rumus:
+
+Movement Ratio (%) = (Total Kuantitas Stock Out / Total Kuantitas Stock In) × 100%.
+
+Perhitungan berdasarkan periode yang dipilih pengguna.
+
+Jika tidak ada transaksi Stock In dalam periode tersebut, tampilkan tanda "-" dan hindari pembagian dengan nol.
+
+### E. Residual Inventory / Net Stock Balance
+Menampilkan sisa persediaan yang masih tersedia setelah memperhitungkan barang masuk dan keluar.
+
+Rumus saldo stok:
+
+Stok Akhir = Stok Awal + Total Stock In - Total Stock Out ± Penyesuaian Stok.
+
+Rumus nilai sisa persediaan:
+
+Residual Stock Value = Σ (Stok Akhir × Harga Satuan).
+
+Dashboard harus membedakan saldo stok aktual dengan selisih transaksi masuk dan keluar pada periode tertentu.
+
+### F. Critical Inventory Monitoring
+Menampilkan kondisi barang kritikal yang tidak boleh sampai kosong.
+
+Setiap barang dapat diberi tanda Critical Item.
+
+Status:
+- AMAN: stok berada di atas batas minimum.
+- KURANG: stok berada pada atau di bawah batas minimum tetapi masih tersedia.
+- HABIS: stok sama dengan nol.
+
+Barang kritikal harus mendapatkan tanda visual dan notifikasi khusus.
+
+# 5. MODUL PERINGATAN DAN REORDER
+
+## 5.1 Critical Stock Alert
+
+Sistem harus mendeteksi barang yang mencapai atau berada di bawah batas minimum stok.
+
+Informasi yang ditampilkan:
+- Part Number.
+- Nama Barang.
+- Kategori.
+- Stok Tersedia.
+- Minimum Stock.
+- Maximum Stock.
+- Status Stok.
+- Tingkat Kekritisan.
+
+## 5.2 Reorder Management
+
+Menyediakan fitur pengelolaan barang yang perlu dilakukan pemesanan ulang.
+
+Fungsi:
+- Menampilkan daftar barang yang membutuhkan pengisian stok.
+- Memilih barang yang akan diajukan untuk pengadaan.
+- Menghitung rekomendasi jumlah pengisian berdasarkan target stok.
+- Membuat laporan Reorder.
+- Mengunduh laporan dalam format Excel dan PDF.
+
+Rumus rekomendasi pengisian:
+
+Recommended Refill Quantity = Target Stock - Current Stock.
+
+Target Stock harus dapat ditentukan dalam Master Item.
+
+Apabila Target Stock belum ditentukan, sistem menandai jumlah pengisian sebagai perlu ditentukan oleh petugas.
+
+## 5.3 Notifikasi
+
+Sistem menyediakan notifikasi untuk:
+- Stok mencapai batas minimum.
+- Stok berada di bawah batas minimum.
+- Barang kritikal hampir habis.
+- Barang kritikal habis.
+- Transaksi Stock In berhasil.
+- Transaksi Stock Out berhasil.
+- Permintaan pengisian stok dibuat.
+
+# 6. MODUL MASTER DATA BARANG
+
+Nama Menu: Master Item List.
+
+Modul ini merupakan pusat pengelolaan seluruh data barang yang tersimpan di gudang.
+
+### 6.1 Informasi Master Item
+
+Setiap barang memiliki informasi:
+
+1. ID Barang.
+2. Part Number / Kode Barang.
+3. Nama Barang.
+4. Kategori Barang.
+5. Deskripsi Barang.
+6. Spesifikasi Barang.
+7. Satuan Barang.
+8. Harga Satuan.
+9. Stok Awal.
+10. Current Stock / Stok Saat Ini.
+11. Minimum Stock.
+12. Maximum Stock.
+13. Target Stock.
+14. Lokasi Penyimpanan.
+15. Supplier Utama.
+16. Critical Item (Ya/Tidak).
+17. Status Barang (Aktif/Nonaktif).
+18. Tanggal Dibuat.
+19. Terakhir Diperbarui.
+
+### 6.2 Fitur Master Item
+
+- Tambah barang baru.
+- Edit data barang.
+- Lihat detail barang.
+- Hapus atau nonaktifkan barang sesuai kewenangan.
+- Pencarian berdasarkan Part Number atau nama barang.
+- Filter berdasarkan kategori.
+- Filter berdasarkan status stok.
+- Filter berdasarkan lokasi.
+- Sorting data.
+- Pagination.
+- Import data Excel.
+- Export data Excel.
+
+Part Number harus unik dan tidak boleh memiliki duplikasi.
+
+Data barang yang sudah mempunyai riwayat transaksi sebaiknya tidak dihapus permanen.
+
+# 7. MODUL STOCK IN (BARANG MASUK)
+
+Nama Menu: Stock In.
+
+Berfungsi untuk mencatat setiap penerimaan barang ke dalam gudang.
+
+### 7.1 Form Stock In
+
+Informasi transaksi:
+
+1. Nomor Transaksi.
+2. Tanggal Penerimaan.
+3. Part Number.
+4. Nama Barang.
+5. Kategori Barang.
+6. Jumlah Diterima.
+7. Satuan.
+8. Harga Satuan.
+9. Total Nilai Penerimaan.
+10. Supplier / Asal Barang.
+11. Nomor Dokumen / Referensi.
+12. Petugas Penerima.
+13. Keterangan.
+14. Lampiran Dokumen jika diperlukan.
+
+### 7.2 Fungsi Stock In
+
+- Menambah stok barang secara otomatis.
+- Menyimpan riwayat penerimaan.
+- Menghitung total nilai transaksi.
+- Memperbarui dashboard secara otomatis.
+- Memperbarui status ketersediaan barang.
+- Menyediakan detail transaksi.
+- Menyediakan fitur pencarian dan filter tanggal.
+- Mencetak atau mengunduh bukti penerimaan.
+
+# 8. MODUL STOCK OUT (BARANG KELUAR)
+
+Nama Menu: Stock Out.
+
+Berfungsi mencatat setiap barang yang dikeluarkan dari gudang.
+
+### 8.1 Form Stock Out
+
+Informasi transaksi:
+
+1. Nomor Transaksi.
+2. Tanggal Pengeluaran.
+3. Part Number.
+4. Nama Barang.
+5. Kategori Barang.
+6. Jumlah Dikeluarkan.
+7. Satuan.
+8. Tujuan Penggunaan.
+9. Unit / Armada / Departemen Pemakai.
+10. Nama Penerima.
+11. Petugas Gudang.
+12. Nomor Dokumen / Referensi.
+13. Keterangan.
+14. Lampiran Dokumen jika diperlukan.
+
+### 8.2 Fungsi Stock Out
+
+- Mengurangi stok barang secara otomatis.
+- Menyimpan riwayat pengeluaran.
+- Memperbarui total stok fisik.
+- Memperbarui status ketersediaan.
+- Memperbarui grafik pergerakan barang.
+- Memperbarui nilai inventaris.
+- Menyediakan detail transaksi.
+- Menyediakan pencarian dan filter tanggal.
+- Mencetak atau mengunduh bukti pengeluaran.
+
+### 8.3 Validasi Stock Out
+
+Sistem tidak boleh mengizinkan pengeluaran barang melebihi stok tersedia.
+
+Contoh:
+
+Stok tersedia: 5 unit.  
+Permintaan keluar: 7 unit.
+
+Sistem harus menolak transaksi dan memberikan peringatan bahwa stok tidak mencukupi.
+
+# 9. MODUL RIWAYAT TRANSAKSI DAN LAPORAN
+
+Nama Menu: Riwayat & Laporan.
+
+Menyediakan seluruh informasi aktivitas persediaan.
+
+### 9.1 Laporan Persediaan
+
+- Laporan seluruh Master Item.
+- Laporan stok tersedia.
+- Laporan stok rendah.
+- Laporan stok berlebih.
+- Laporan barang kritikal.
+- Laporan nilai inventaris.
+- Laporan barang tidak bergerak.
+
+### 9.2 Laporan Transaksi
+
+- Laporan Stock In.
+- Laporan Stock Out.
+- Laporan transaksi berdasarkan tanggal.
+- Laporan pergerakan barang.
+- Laporan penerimaan berdasarkan supplier.
+- Laporan pengeluaran berdasarkan tujuan penggunaan.
+
+### 9.3 Fitur Laporan
+
+Setiap laporan harus mendukung:
+- Filter tanggal.
+- Filter kategori.
+- Filter Part Number.
+- Filter nama barang.
+- Filter status stok.
+- Pencarian data.
+- Sorting.
+- Pagination.
+- Download Excel.
+- Download PDF.
+- Tampilan cetak.
+
+Laporan Excel harus menyertakan data detail, bukan sekadar angka ringkasan dashboard.
+
+# 10. MODUL STOCK OPNAME
+
+Menyediakan fasilitas pencocokan jumlah stok fisik dengan jumlah stok yang tercatat di dalam sistem.
+
+Fungsi:
+- Membuat sesi Stock Opname.
+- Memilih barang yang akan diperiksa.
+- Menginput hasil penghitungan fisik.
+- Membandingkan stok sistem dengan stok fisik.
+- Menghitung selisih stok.
+- Menambahkan keterangan selisih.
+- Menyimpan hasil pemeriksaan.
+- Meminta persetujuan penyesuaian apabila diperlukan.
+- Mencatat seluruh penyesuaian ke dalam histori dan audit log.
+
+Stok tidak boleh berubah hanya karena hasil penghitungan dimasukkan. Penyesuaian harus melalui proses persetujuan sesuai hak akses.
+
+# 11. MODUL PURCHASE ORDER (PO)
+
+Menyediakan fitur pendukung pengadaan barang.
+
+Fungsi:
+- Membuat dokumen Purchase Order.
+- Memilih supplier.
+- Memilih barang.
+- Mengisi jumlah pemesanan.
+- Menghitung estimasi harga.
+- Mengatur status PO.
+- Melihat riwayat PO.
+
+Status PO:
+- Draft.
+- Menunggu Persetujuan.
+- Disetujui.
+- Dipesan.
+- Sebagian Diterima.
+- Selesai.
+- Dibatalkan.
+
+PO tidak boleh otomatis menambah stok. Penambahan stok dilakukan setelah barang benar-benar diterima melalui transaksi Stock In.
+
+# 12. MODUL SUPPLIER MANAGEMENT
+
+Menyediakan pengelolaan data pemasok.
+
+Data supplier:
+- ID Supplier.
+- Nama Perusahaan.
+- Nama Kontak.
+- Nomor Telepon.
+- Email.
+- Alamat.
+- Keterangan.
+- Status Supplier.
+
+Fitur:
+- Tambah supplier.
+- Edit supplier.
+- Lihat detail.
+- Nonaktifkan supplier.
+- Hubungkan supplier dengan Master Item.
+- Melihat riwayat pembelian atau penerimaan barang berdasarkan supplier.
+
+# 13. MODUL KATEGORI DAN LOKASI PENYIMPANAN
+
+Menyediakan pengelolaan kategori barang dan lokasi penyimpanan.
+
+### Kategori Barang
+- Tambah kategori.
+- Edit kategori.
+- Hapus kategori apabila belum digunakan.
+- Melihat jumlah barang per kategori.
+
+### Lokasi Penyimpanan
+- Kode lokasi.
+- Nama gudang.
+- Area.
+- Rak.
+- Tingkat / posisi penyimpanan.
+- Keterangan.
+
+Sistem harus mendukung pengembangan ke beberapa area atau lokasi penyimpanan apabila dibutuhkan.
+
+# 14. MODUL BARCODE DAN QR CODE
+
+Fitur ini merupakan pengembangan pendukung identifikasi barang.
+
+Fungsi:
+- Membuat barcode atau QR Code untuk setiap item.
+- Menampilkan kode pada detail barang.
+- Mendukung pencetakan label.
+- Mempermudah pencarian barang.
+- Mempercepat proses Stock In, Stock Out, dan Stock Opname melalui pemindaian apabila perangkat mendukung.
+
+# 15. MODUL AUDIT LOG
+
+Mencatat aktivitas penting pengguna di dalam sistem.
+
+Informasi audit:
+- Nama pengguna.
+- Tanggal dan waktu aktivitas.
+- Jenis aktivitas.
+- Data yang diubah.
+- Nilai sebelum perubahan.
+- Nilai setelah perubahan.
+- Keterangan.
+
+Aktivitas yang wajib dicatat:
+- Penambahan data barang.
+- Perubahan data barang.
+- Penonaktifan barang.
+- Stock In.
+- Stock Out.
+- Penyesuaian stok.
+- Stock Opname.
+- Perubahan hak akses.
+- Persetujuan transaksi.
+
+Riwayat transaksi penting tidak boleh dihapus tanpa jejak.
+
+# 16. MODUL MANAJEMEN PENGGUNA
+
+Menyediakan pengaturan akun pengguna dan hak akses.
+
+Fitur:
+- Tambah pengguna.
+- Edit pengguna.
+- Nonaktifkan pengguna.
+- Pengaturan username.
+- Pengaturan password.
+- Pengaturan role.
+- Pengaturan hak akses.
+- Riwayat login.
+- Ganti password.
+- Logout.
+
+Pastikan pengguna hanya dapat mengakses modul sesuai kewenangannya.
+
+# 17. RANCANGAN VISUAL DAN UI/UX
+
+Gunakan desain antarmuka yang modern, profesional, informatif, dan berorientasi pada kebutuhan perusahaan.
+
+### 17.1 Referensi Desain
+
+Gunakan screenshot dashboard Warehouse PT. GLOBAL ENERGI LESTARI – Warehouse Jatirejo sebagai acuan visual.
+
+Karakter desain:
+- Dark Navy sebagai warna utama.
+- Background gelap yang profesional.
+- Kartu statistik dengan sudut membulat.
+- Sidebar navigasi di sebelah kiri.
+- Header dashboard di bagian atas.
+- Grafik interaktif.
+- Tabel dengan tampilan bersih.
+- Indikator status menggunakan warna berbeda.
+
+### 17.2 Palet Warna
+
+Rekomendasi:
+- Dark Navy: #0B1220.
+- Secondary Navy: #111C30.
+- Card Background: #151F32.
+- Border: #25334A.
+- Primary Blue: #3B82F6.
+- Success Green: #10B981.
+- Warning Orange: #F59E0B.
+- Danger Red: #F43F5E.
+- Text Primary: #F8FAFC.
+- Text Secondary: #94A3B8.
+
+Gunakan warna status secara konsisten:
+- Hijau: Aman / Safe.
+- Kuning atau Oranye: Perlu Perhatian.
+- Merah: Low / Critical / Habis.
+- Biru: Informasi.
+- Ungu: Analisis atau kategori pendukung.
+
+### 17.3 Struktur Navigasi Sidebar
+
+1. Dashboard.
+2. Master Item List.
+3. Stock In (Masuk).
+4. Stock Out (Keluar).
+5. Reorder Management.
+6. Stock Opname.
+7. Purchase Order.
+8. Supplier Management.
+9. Kategori & Lokasi.
+10. Riwayat & Laporan.
+11. Audit Log.
+12. Manajemen Pengguna.
+13. Pengaturan Sistem.
+
+### 17.4 Ketentuan Responsif
+
+Aplikasi harus dapat digunakan melalui:
+- Desktop.
+- Laptop.
+- Tablet.
+- Smartphone.
+
+Pada desktop, gunakan sidebar permanen.
+
+Pada perangkat mobile, sidebar harus dapat dibuka dan ditutup melalui tombol menu.
+
+Tabel harus tetap nyaman dibaca dengan dukungan horizontal scrolling apabila diperlukan.
+
+# 18. KETENTUAN PERHITUNGAN DAN LOGIKA BISNIS
+
+Bagian ini sangat penting karena seluruh visualisasi dashboard harus berdasarkan data transaksi yang sebenarnya.
+
+### 18.1 Perhitungan Stok
+
+Stok Saat Ini = Stok Awal + Stock In - Stock Out ± Penyesuaian.
+
+### 18.2 Status Ketersediaan
+
+- Low: Stok sama dengan atau lebih rendah dari Minimum Stock.
+- Safe: Stok di atas Minimum Stock dan tidak melebihi Maximum Stock apabila batas maksimum ditetapkan.
+- Over: Stok melebihi Maximum Stock.
+- Out of Stock: Stok sama dengan nol.
+
+Apabila Maximum Stock belum ditentukan, sistem tidak boleh mengarang status Over.
+
+### 18.3 Critical Stock
+
+Barang kritikal ditentukan melalui pengaturan Critical Item pada Master Item.
+
+Status:
+- Aman.
+- Kurang.
+- Habis.
+
+Barang kritikal harus mendapatkan prioritas notifikasi lebih tinggi dibanding barang biasa.
+
+### 18.4 Pergerakan Barang
+
+Klasifikasi Fast, Medium, Slow, dan Non Moving mengikuti waktu Stock Out terakhir dengan rentang awal sebagaimana dijelaskan pada bagian KPI.
+
+Perhitungan harus menggunakan tanggal transaksi yang valid dan hanya memperhitungkan transaksi yang sudah disahkan.
+
+### 18.5 Periode Analisis
+
+Dashboard harus menyediakan filter periode:
+- Hari ini.
+- 7 hari terakhir.
+- 30 hari terakhir.
+- Bulan ini.
+- Bulan sebelumnya.
+- Tahun ini.
+- Rentang tanggal khusus.
+
+KPI saldo stok dan total nilai inventaris harus tetap menampilkan kondisi berdasarkan tanggal akhir periode yang dipilih. Statistik transaksi menampilkan aktivitas selama periode tersebut.
+
+# 19. KEBUTUHAN DATABASE DAN STRUKTUR DATA
+
+Sistem harus memiliki struktur data yang terorganisasi dan saling terhubung.
+
+Entitas utama:
+
+### 19.1 MASTER_ITEM
+Menyimpan data seluruh barang.
+
+### 19.2 STOCK_IN
+Menyimpan transaksi penerimaan barang.
+
+### 19.3 STOCK_OUT
+Menyimpan transaksi pengeluaran barang.
+
+### 19.4 STOCK_ADJUSTMENT
+Menyimpan penyesuaian stok.
+
+### 19.5 STOCK_OPNAME
+Menyimpan sesi dan hasil pemeriksaan stok fisik.
+
+### 19.6 CATEGORIES
+Menyimpan kategori barang.
+
+### 19.7 SUPPLIERS
+Menyimpan data pemasok.
+
+### 19.8 STORAGE_LOCATIONS
+Menyimpan lokasi penyimpanan.
+
+### 19.9 PURCHASE_ORDERS
+Menyimpan dokumen pengadaan.
+
+### 19.10 USERS
+Menyimpan informasi akun pengguna.
+
+### 19.11 ROLES
+Menyimpan pengaturan hak akses.
+
+### 19.12 NOTIFICATIONS
+Menyimpan informasi peringatan sistem.
+
+### 19.13 AUDIT_LOGS
+Menyimpan histori aktivitas pengguna.
+
+### 19.14 SYSTEM_SETTINGS
+Menyimpan konfigurasi minimum stock, maximum stock, klasifikasi pergerakan, dan pengaturan lainnya.
+
+Setiap transaksi harus memiliki ID unik, tanggal, status, dan informasi pengguna yang melakukan transaksi.
+
+Hubungan antar-data harus menjaga konsistensi stok. Jangan membuat stok pada Master Item menjadi data yang dapat berubah tanpa histori transaksi.
+
+# 20. PERSYARATAN FUNGSIONAL DAN NONFUNGSIONAL
+
+### 20.1 Functional Requirements
+
+Sistem wajib:
+1. Memiliki halaman login.
+2. Menyediakan dashboard utama.
+3. Mengelola Master Item.
+4. Melakukan pencatatan Stock In.
+5. Melakukan pencatatan Stock Out.
+6. Memperbarui stok secara otomatis setelah transaksi berhasil.
+7. Menolak pengeluaran yang melebihi stok tersedia.
+8. Menyediakan peringatan stok rendah.
+9. Menampilkan stok kritikal.
+10. Menampilkan nilai inventaris.
+11. Menampilkan analisis pergerakan stok.
+12. Menampilkan grafik Stock In dan Stock Out.
+13. Menyediakan Reorder Management.
+14. Menyediakan riwayat transaksi.
+15. Menyediakan Stock Opname.
+16. Menyediakan manajemen supplier.
+17. Menyediakan manajemen pengguna dan hak akses.
+18. Menyediakan ekspor laporan Excel dan PDF.
+19. Menyimpan audit aktivitas.
+20. Memastikan data dashboard selalu konsisten dengan data transaksi.
+
+### 20.2 Nonfunctional Requirements
+
+- Tampilan profesional dan responsif.
+- Navigasi sederhana dan mudah dipahami.
+- Data tersimpan secara persisten.
+- Validasi input yang kuat.
+- Perhitungan stok akurat.
+- Keamanan akun dan hak akses.
+- Tidak terjadi duplikasi transaksi akibat klik berulang.
+- Memiliki penanganan error yang informatif.
+- Memiliki mekanisme backup data.
+- Mendukung pertumbuhan jumlah item dan transaksi.
+- Memiliki performa yang baik ketika data bertambah.
+
+# 21. DATA DEMO DAN PENGUJIAN
+
+Sediakan fitur pengujian menggunakan data demo yang relevan dengan kebutuhan gudang sparepart alat berat dan armada logistik.
+
+Contoh data:
+- O-Ring Seal Hydraulic Boom.
+- Brake Shoe Assembly.
+- Alternator Heavy Duty 24V.
+- Shell Tellus Hydraulic Oil.
+- Thermal / Terpal Truk Ekspedisi.
+- Filter Oli.
+- Bearing.
+- Hydraulic Hose.
+- Belt / V-Belt.
+- Komponen Mesin.
+
+Data demo harus memiliki:
+- Part Number berbeda.
+- Nama barang.
+- Kategori.
+- Harga satuan.
+- Stok awal.
+- Minimum stock.
+- Maximum stock.
+- Target stock.
+- Riwayat Stock In.
+- Riwayat Stock Out.
+- Status Critical Item.
+
+Data demo harus menghasilkan dashboard yang realistis dan bervariasi, misalnya:
+- Barang dengan stok aman.
+- Barang stok rendah.
+- Barang habis.
+- Barang berlebih.
+- Barang Fast Moving.
+- Barang Medium Moving.
+- Barang Slow Moving.
+- Barang Non Moving.
+
+Data demo harus diberi tanda sebagai data simulasi dan tidak boleh dicampur dengan data operasional sebenarnya tanpa persetujuan pengguna.
+
+# 22. KRITERIA KEBERHASILAN SISTEM
+
+Sistem dinyatakan memenuhi kebutuhan apabila:
+
+1. Pengguna dapat melihat kondisi keseluruhan gudang melalui dashboard.
+2. Persentase Stock Readiness dihitung berdasarkan data aktual.
+3. Total Value Stock dapat dihitung secara otomatis.
+4. Klasifikasi pergerakan barang dapat ditampilkan.
+5. Jumlah barang masuk dan keluar dapat dipantau.
+6. Status Low, Safe, dan Over dapat diketahui.
+7. Barang kritikal dapat teridentifikasi dengan jelas.
+8. Pengguna dapat mengunduh daftar barang yang membutuhkan pengisian stok.
+9. Transaksi Stock In dan Stock Out dapat dilakukan tanpa kesalahan perhitungan stok.
+10. Riwayat transaksi dapat ditelusuri.
+11. Laporan Excel dan PDF dapat dihasilkan.
+12. Hak akses setiap pengguna berjalan sesuai pengaturan.
+13. Perubahan data dan transaksi tercatat dalam audit log.
+14. Dashboard dan seluruh laporan menggunakan sumber data yang konsisten.
+
+# 23. PRIORITAS PENGEMBANGAN
+
+Pengembangan dilakukan secara bertahap agar sistem memiliki fondasi yang kuat.
+
+### PRIORITAS 1 – CORE INVENTORY SYSTEM
+- Login dan Role Management.
+- Master Item.
+- Stock In.
+- Stock Out.
+- Perhitungan stok otomatis.
+- Dashboard utama.
+- Low Stock Alert.
+- Critical Stock Alert.
+
+### PRIORITAS 2 – DASHBOARD ANALYTICS
+- Stock Readiness.
+- Total Value Stock.
+- Stock Movement Ranking.
+- Stock In vs Stock Out.
+- Stock Status Distribution.
+- Movement Ratio.
+- Residual Inventory.
+- Critical Inventory Monitoring.
+
+### PRIORITAS 3 – REPORTING & REORDER
+- Reorder Management.
+- Riwayat Transaksi.
+- Laporan Inventaris.
+- Export Excel.
+- Export PDF.
+- Filter dan pencarian data.
+
+### PRIORITAS 4 – ADVANCED WAREHOUSE MANAGEMENT
+- Stock Opname.
+- Purchase Order.
+- Supplier Management.
+- Kategori dan Lokasi Penyimpanan.
+- Barcode / QR Code.
+- Audit Log.
+- Pengembangan hak akses lanjutan.
+
+# 24. INSTRUKSI PENGEMBANGAN UNTUK GOOGLE AI STUDIO
+
+Berdasarkan seluruh Product Requirements Document ini, bertindaklah sebagai Senior Software Engineer, System Analyst, UI/UX Designer, dan Database Architect.
+
+Bangun aplikasi Warehouse Master Inventory Management System untuk PT. GLOBAL ENERGI LESTARI – Warehouse Jatirejo.
+
+Ketentuan pengembangan:
+
+1. Hasil akhir harus berupa aplikasi web fungsional, bukan sekadar gambar dashboard, desain statis, atau prototype tanpa fungsi.
+2. Ikuti seluruh kebutuhan fungsional dan alur bisnis yang telah dijabarkan dalam PRD.
+3. Prioritaskan dashboard yang menarik, profesional, informatif, dan mudah dipahami.
+4. Setiap tombol, menu, form, filter, grafik, tabel, dan fitur harus memiliki fungsi yang sesuai.
+5. Seluruh KPI dan grafik harus mengambil data dari sumber data yang sama dan dihitung secara dinamis, bukan angka statis.
+6. Setiap transaksi Stock In dan Stock Out harus memperbarui stok secara konsisten.
+7. Terapkan validasi agar stok tidak menjadi negatif.
+8. Terapkan hak akses berdasarkan role pengguna.
+9. Gunakan struktur database yang terorganisasi dan memiliki relasi antar-entitas.
+10. Sediakan data demo untuk pengujian awal dengan penanda yang jelas.
+11. Pastikan data tidak hilang ketika halaman direfresh atau pengguna login kembali.
+12. Sediakan fitur pencarian, filter, sorting, dan export sesuai kebutuhan masing-masing modul.
+13. Jangan membuat fungsi yang terlihat aktif tetapi sebenarnya tidak bekerja.
+14. Jangan menggunakan data dummy sebagai sumber KPI setelah sistem terhubung dengan data operasional.
+15. Jangan menghilangkan fitur atau kebutuhan yang tercantum dalam PRD tanpa alasan dan persetujuan.
+16. Buat kode yang modular, mudah dikembangkan, dan memiliki penanganan error.
+17. Pastikan tampilan optimal pada desktop, tablet, dan smartphone.
+
+### TAHAP IMPLEMENTASI
+
+Jangan membangun seluruh sistem secara terburu-buru dalam satu tahap jika hal tersebut berisiko menghasilkan fungsi yang tidak lengkap.
+
+Mulai dengan:
+- Menyusun arsitektur aplikasi.
+- Menyusun struktur database.
+- Membuat sistem autentikasi dan hak akses.
+- Membangun layout utama dan sidebar.
+- Membangun dashboard beserta komponen KPI.
+- Mengembangkan modul Master Item.
+- Mengembangkan Stock In dan Stock Out.
+
+Setelah fondasi utama berjalan, lanjutkan ke analitik, Reorder, laporan, Stock Opname, Purchase Order, dan modul pengembangan lainnya.
+
+Setiap tahap harus diuji sebelum melanjutkan ke tahap berikutnya.
+
+### TARGET AKHIR
+
+Menghasilkan sebuah Warehouse Master Inventory Management System yang dapat membantu PT. GLOBAL ENERGI LESTARI – Warehouse Jatirejo dalam mengontrol, memonitor, menganalisis, dan mengelola seluruh persediaan gudang secara digital.
+
+Sistem harus mampu menjawab satu pertanyaan utama melalui dashboard:
+
+**"Apakah kondisi persediaan barang di gudang saat ini sudah cukup dan siap mendukung kebutuhan operasional, atau justru terdapat barang yang perlu segera dilakukan pengadaan ulang?"**
+
+Seluruh informasi harus disajikan secara visual, akurat, interaktif, dan dapat dipertanggungjawabkan berdasarkan data transaksi aktual.
+
+---
+
+**AKHIR DOKUMEN PRD**

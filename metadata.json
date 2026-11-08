@@ -1,0 +1,6 @@
+{
+  "name": "Warehouse Master Inventory – PT. Global Energi Lestari",
+  "description": "Sistem Manajemen Inventaris Utama (WMS) untuk pemantauan kesiapan stok, nilai persediaan, pergerakan barang, dan pengadaan sparepart alat berat & armada logistik di Warehouse Jatirejo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
